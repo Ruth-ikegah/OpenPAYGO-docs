@@ -7,5 +7,12 @@
 
 .featureSvg {
   height: 200px;
-  width: 200px;
+}
+
+.featureImg {
+  height: 200px;
+}
+
+.featurePng {
+  height: 200px;
 }

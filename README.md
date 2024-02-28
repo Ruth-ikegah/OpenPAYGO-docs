@@ -1,41 +1,32 @@
-# Website
+# OpenPAYGO documentation website
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+This OpenPAYGO documentation website is built using [Docusaurus 3](https://docusaurus.io/), a modern static website generator.
 
-### Installation
+## Pre-requisites
 
-```
-$ yarn
-```
+- [NodeJS](https://nodejs.org/en)
 
-### Local Development
+## Installation
 
-```
-$ yarn start
+```sh
+npm install
 ```
 
+## Local Development
+
+```sh
+npm run start
+```
+
+Then open [docs](http://localhost:3000/OpenPAYGO/) in a local web browser.
 This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
-### Build
+## Deployment
 
-```
-$ yarn build
-```
+Deployment is done using Github Actions and does not involve manual steps.
+Check out `.github/workflows` folder of the root repository.
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+## Further Read
 
-### Deployment
-
-Using SSH:
-
-```
-$ USE_SSH=true yarn deploy
-```
-
-Not using SSH:
-
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+- [Markdown Features](https://docusaurus.io/docs/markdown-features)
+- [Markdown Front Matter](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-content-docs#markdown-front-matter)

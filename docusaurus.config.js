@@ -4,136 +4,199 @@
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
-import {themes as prismThemes} from 'prism-react-renderer';
+import { themes as prismThemes } from "prism-react-renderer";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
-  favicon: 'img/favicon.ico',
+  title: "OpenPAYGO-docs",
+  tagline: "Open source PAYGO ecosystem.",
+  favicon: "img/openpaygo-icon.png",
 
-  // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  url: "https://enaccess.github.io/",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: "/OpenPAYGO-docs/",
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: "EnAccess",
+  projectName: "OpenPAYGO-docs",
 
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenLinks: "throw",
+  onBrokenMarkdownLinks: "warn",
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
   // may want to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: "en",
+    locales: ["en"],
+  },
+
+  markdown: {
+    format: "detect",
+    mermaid: true,
   },
 
   presets: [
     [
-      'classic',
+      "classic",
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: './sidebars.js',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
+          path: "docs",
+          // Please change this to your repo. Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            "https://github.com/EnAccess/OpenPAYGO-docs/tree/main/shared/",
+          remarkPlugins: [remarkMath],
+          rehypePlugins: [rehypeKatex],
         },
         blog: {
+          path: "blog",
           showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
+          // Please change this to your repo. Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            "https://github.com/EnAccess/OpenPAYGO-docs/tree/main/shared/",
         },
         theme: {
-          customCss: './src/css/custom.css',
+          customCss: "./src/css/custom.css",
+        },
+        gtag: {
+          trackingID: "G-PTQ3NKJGK5",
+          anonymizeIP: true,
         },
       }),
     ],
   ],
 
+  themes: [
+    [
+      require.resolve("@easyops-cn/docusaurus-search-local"),
+      {
+        hashed: true,
+        // docsRouteBasePath: '/',
+        highlightSearchTermsOnTargetPage: true,
+      },
+    ],
+    "@docusaurus/theme-mermaid",
+  ],
+
+  stylesheets: [
+    {
+      href: "https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css",
+      type: "text/css",
+      integrity:
+        "sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM",
+      crossorigin: "anonymous",
+    },
+  ],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      // Replace with your project's social card
-      image: 'img/docusaurus-social-card.jpg',
+      image: "img/enaccess-logo.svg",
       navbar: {
-        title: 'My Site',
+        title: "OpenPAYGO Docs",
         logo: {
-          alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          alt: "EnAccess Logo",
+          src: "img/enaccess-logo.svg",
+          srcDark: "img/enaccess-logo-white.svg",
         },
         items: [
           {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Tutorial',
+            to: "/docs",
+            label: "Docs",
+            position: "left",
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: 'https://github.com/facebook/docusaurus',
-            label: 'GitHub',
-            position: 'right',
+            to: "/docs/quick-start-guide",
+            label: "Get Started",
+            position: "left",
+          },
+          {
+            to: "/blog",
+            label: "Blog",
+            position: "left",
+          },
+          {
+            href: "https://github.com/EnAccess/OpenPAYGO-docs",
+            position: "right",
+            className: "header-github-link",
+            "aria-label": "GitHub repository",
           },
         ],
       },
       footer: {
-        style: 'dark',
+        style: "light",
+        logo: {
+          alt: "EnAccess Logo",
+          src: "img/enaccess-logo.svg",
+          srcDark: "img/enaccess-logo-white.svg",
+          href: "https://enaccess.org",
+          width: 160,
+          height: 51,
+        },
         links: [
           {
-            title: 'Docs',
+            title: "Docs",
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                label: "Get Started 🚀",
+                to: "/docs/quick-start-guide",
+              },
+              {
+                label: "Read the documentation 📄",
+                to: "/docs",
               },
             ],
           },
           {
-            title: 'Community',
+            title: "Community",
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                label: "Community",
+                href: "https://community.enaccess.org/",
               },
               {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
+                label: "Discord (TBD)",
+                href: "https://enaccess.org/",
               },
             ],
           },
           {
-            title: 'More',
+            title: "Follow us",
             items: [
               {
-                label: 'Blog',
-                to: '/blog',
+                label: "EnAccess Homepage",
+                href: "https://enaccess.org/",
               },
               {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                label: "GitHub",
+                href: "https://github.com/EnAccess/",
+              },
+              {
+                label: "LinkedIn",
+                href: "https://www.linkedin.com/company/enaccess/",
+              },
+              {
+                label: "Youtube",
+                href: "https://www.youtube.com/@EnAccessFoundation/",
+              },
+              {
+                label: "Twitter",
+                href: "https://twitter.com/EnAccessFdn/",
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} EnAccess.Built with Docusaurus ❤️.`,
       },
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
+        additionalLanguages: ["powershell", "php"],
       },
     }),
 };

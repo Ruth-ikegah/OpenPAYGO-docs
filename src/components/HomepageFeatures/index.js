@@ -1,45 +1,49 @@
-import clsx from 'clsx';
-import Heading from '@theme/Heading';
-import styles from './styles.module.css';
+import clsx from "clsx";
+import Heading from "@theme/Heading";
+import styles from "./styles.module.css";
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: "OpenPAYGO Token",
+    WebP: require("@site/static/img/openpaygo_token.webp").default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Hardware and software agnostic open technology to enable PAYGO
+        functionality in any device and make products PAYGO compatible.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: "OpenPAYGO Link",
+    WebP: require("@site/static/img/openpaygo_link.webp").default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Free and secure open-source technology PAYGO appliances communication
+        protocol that make products interoperable and provides a reliable
+        connection
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: "OpenPAYGO Metrics",
+    WebP: require("@site/static/img/openpaygo_metric.webp").default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Free Open-source API specification that provides optimised standardised
+        data format transmission for PAYGO devices to exchange usage metrics in
+        a compact and efficient way
       </>
     ),
   },
 ];
 
-function Feature({Svg, title, description}) {
+function Feature({ Svg, Png, WebP, title, description }) {
   return (
-    <div className={clsx('col col--4')}>
+    <div className={clsx("col col--4")}>
       <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+        {Svg && <Svg className={styles.featureSvg} role="img" />}
+        {Png && <img src={Png} alt={title} className={styles.featurePng} />}
+        {WebP && <img src={WebP} alt={title} className={styles.featureImg} />}
       </div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">{title}</Heading>
