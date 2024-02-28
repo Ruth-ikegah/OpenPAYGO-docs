@@ -41,7 +41,7 @@ h3 {
   /* --ifm-color-primary-lightest: #ffffff; */
   --ifm-color-secondary: #de5126;
   --ifm-background-color: #0e3d55 !important;
-  --ifm-background-surface-color:: #0e3d55 !important;
+  --ifm-background-surface-color: #0e3d55 !important;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
