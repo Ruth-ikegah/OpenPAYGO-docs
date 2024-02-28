@@ -223,9 +223,9 @@ It is important that the CSV be encoded using actual comma separator “,” and
 
 While serial numbers are not actually used inside the device or by the OpenPAYGO Token system, they are required as a single unique identifier for PAYG platforms. For that reason we highly recommend the following measures:
 
-1. **Print the serial numbers very visibly on the devices:**both Agents and Clients will often need to find them for usage with the PAYG platform (e.g. as payment reference)
-1. **Include a prefix related to your brand in the serial number:**this will prevent different products from different manufacturers having the same serial number. For example, if your brand is “SuperLight” you can use the prefix “SLT” prefix and have serial numbers that look like this: SLT30000123 hence making serial number clashes a lot less likely.
-1. **Be sure to use the same format of serial numbers everywhere:**make sure that the serial number format that you use as printed on your device, on the box, on the CSV list, etc. always have the same format to avoid confusion. For example avoid printing “30000123” but then having “SLT30000123” in the CSVto avoid confusing clients.
+1. **Print the serial numbers very visibly on the devices:** both Agents and Clients will often need to find them for usage with the PAYG platform (e.g. as payment reference)
+1. **Include a prefix related to your brand in the serial number:** this will prevent different products from different manufacturers having the same serial number. For example, if your brand is “SuperLight” you can use the prefix “SLT” prefix and have serial numbers that look like this: SLT30000123 hence making serial number clashes a lot less likely.
+1. **Be sure to use the same format of serial numbers everywhere:** make sure that the serial number format that you use as printed on your device, on the box, on the CSV list, etc. always have the same format to avoid confusion. For example avoid printing “30000123” but then having “SLT30000123” in the CSVto avoid confusing clients.
 
 ## Test codes
 
