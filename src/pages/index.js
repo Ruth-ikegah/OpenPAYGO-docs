@@ -21,7 +21,7 @@ function HomepageHeader() {
             Read the documentation 📄
           </Link>
           <Link
-            className="button button--info button--lg"
+            className="button button--secondary button--lg"
             to="/docs/quick-start-guide"
           >
             Get Started 🚀
