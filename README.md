@@ -18,7 +18,7 @@ npm install
 npm run start
 ```
 
-Then open [docs](http://localhost:3000/OpenPAYGO/) in a local web browser.
+Then open [docs](http://localhost:3000/OpenPAYGO-docs/) in a local web browser.
 This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
 ## Deployment
