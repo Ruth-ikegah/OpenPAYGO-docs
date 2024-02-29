@@ -16,12 +16,12 @@ We then go on and go into a little bit more detail about the critical choice wit
 
 This includes device using entry of token via keypad, remote control, etc. It is probably the most common PAYGO choice at the moment.
 
-**Pros:**
+**➕ Pros:**
 
 - Can be very cheap to implement
 - Works even in the most remote regions with no coverage
 
-**Cons:**
+**➖ Cons:**
 
 - Requires some customer education on token entry
 - Still some costs to send the token to the client (if done via SMS)
@@ -32,12 +32,12 @@ This includes device using entry of token via keypad, remote control, etc. It is
 
 This includes devices using direct GSM communication, connection via WiFi hotspot, LoraWAN hotspot, etc. It is a relatively common PAYG choice and allows the device to directly communicate with the manufacturer/distributors servers.
 
-**Pros:**
+**➕ Pros:**
 
 - Ability to receive back data feedback from devices (usage data, health data, etc.)
 - Easiest option to use for clients, nothing to do
 
-**Cons:**
+**➖ Cons:**
 
 - Requires more expensive hardware
 - Must have network reception
@@ -51,11 +51,11 @@ Those other methods are less common but have been found in commercial products a
 
 #### Cable activation
 
-**Pros:**
+**➕ Pros:**
 
 - Very cheap hardware
 
-**Cons:**
+**➖ Cons:**
 
 - Requires an agent to physically access the device for every activation
 
@@ -63,11 +63,11 @@ Those other methods are less common but have been found in commercial products a
 
 #### Activation via Bluetooth
 
-**Pros:**
+**➕ Pros:**
 
 - Cheaper than direct radio communication
 
-**Cons:**
+**➖ Cons:**
 
 - Requires the client to have a smartphone and internet connection
 
@@ -75,12 +75,12 @@ Those other methods are less common but have been found in commercial products a
 
 #### Activation via phone sound
 
-**Pros:**
+**➕ Pros:**
 
 - Easier to use for clients than token
 - Lower running costs than direct GSM
 
-**Cons:**
+**➖ Cons:**
 
 - Complex engineering
 - Requires high quality phone connection
@@ -89,13 +89,13 @@ Those other methods are less common but have been found in commercial products a
 
 ### Separate Remote Control
 
-**Pros:**
+**➕ Pros:**
 
 - Requires very little changes to the device design
 - Very small physical footprint
 - Requires few MCU pins
 
-**Cons:**
+**➖ Cons:**
 
 - Clients might lose or break the remotes
 - The batteries in the remote might need changing
@@ -106,12 +106,12 @@ It is also recommended for very small products on which having a keypad or a por
 
 ### Integrated Keypad
 
-**Pros:**
+**➕ Pros:**
 
 - Usually cheapest
 - Most reliable and user friendly
 
-**Cons:**
+**➖ Cons:**
 
 - Requires significant design changes
 - Relatively large physical footprint
@@ -120,12 +120,12 @@ It is also recommended for very small products on which having a keypad or a por
 
 ### External Wired Keypad
 
-**Pros:**
+**➕ Pros:**
 
 - Reliable
 - Requires few MCU pins
 
-**Cons:**
+**➖ Cons:**
 
 - Keypads might be lost
 - Requires potentially significant design change for the port
@@ -136,13 +136,13 @@ It is also recommended for very small products on which having a keypad or a por
 
 ### GSM/3G
 
-**Pros:**
+**➕ Pros:**
 
 - Network already in place and broad
 - Fairly reliable
 - Can transmit significant amount of data
 
-**Cons:**
+**➖ Cons:**
 
 - Requires expensive Modems (~3\$-15\$)
 - Requires expensive M2M subscription (>0.5\$-5\$ per device per month)
@@ -151,13 +151,13 @@ It is also recommended for very small products on which having a keypad or a por
 
 ### WiFi
 
-**Pros:**
+**➕ Pros:**
 
 - Running costs are covered by the client
 - Fairly reliable if the underlying internet connection is reliable
 - Relatively cheap modules
 
-**Cons:**
+**➖ Cons:**
 
 - Requires the client to have a WiFi network
 - Requires the client to configure the device to use that network
@@ -166,12 +166,12 @@ It is also recommended for very small products on which having a keypad or a por
 
 ### LoRaWAN
 
-**Pros:**
+**➕ Pros:**
 
 - Running costs are low
 - Relatively cheap modules
 
-**Cons:**
+**➖ Cons:**
 
 - Requires to setup your own network infrastructure (gateways, etc.) which can be very costly
 - Technology is not very widely available and requires additional engineering effort
