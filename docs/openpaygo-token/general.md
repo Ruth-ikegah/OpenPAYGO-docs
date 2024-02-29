@@ -6,11 +6,12 @@ sidebar_position: 1
 
 ## Description of the business need
 
-This project targets manufacturer that want to add a Pay As You Go (PAYGO) feature to their product. They can use the hardware examples to add a hardware control feature (e.g. a switch to control the load) and use this token system as a secure way to remotely control the activation of the devices via a token.
+This project targets manufacturer that want to add a Pay-As-You-Go (PAYGO) feature to their product. They can use the hardware examples to add a hardware control feature (e.g. a switch to control the load) and use this token system as a secure way to remotely control the activation of the devices via a token.
 
 The token system consists of a way of generating tokens containing a certain number of days to be activated on a unit (which will be generated on a server), and a way to verify that a token is valid and extract the number of days to be activated (which will be done in the device).
 
-The token generation part of the system can then be integrated with a software platform such as PaygOps or any other software platform. The token validation part can be integrated in virtually any device.
+The token generation part of the system can then be integrated with a software platform such as PaygOps or any other software platform.
+The token validation part can be integrated in virtually any device.
 
 ## License
 
@@ -21,10 +22,10 @@ While projects financed by EnAccess usually use an MIT license for maximum openn
 - The activation token should be able to contain 2 years worth of activation time (and should be able to use more tokens after that period to add more time, up to at least 10 years).
 - The activation tokens should be able to both add and remove days from a system (presenting advantages over most currently existing solution).
 - The tokens should also be able to enable or disable the PAYGO mode at will
-- The token system should be extensible to add certain commands required by some devices (but that do not need standardisation, e.g. “Enable High Power mode”).
+- The token system should be extensible to add certain commands required by some devices (but that do not need standardisation, e.g. "Enable High Power mode").
 - The code should be reasonably secure; trying to type the same code twice, taking a code from a neighbour or typing codes randomly should not succeed (or extremely rarely).
-- The token generator (the server), will be given some starting data for each device that are defined by the manufacturer. This includes a key (that can be shared for a whole batch or not) as well as a serial number and a “starting code” for each device. Aspecific format for this data based on CSV shall be specified to ensure interoperability.
-- The token verification (the unit) will know its “starting code” and the key and will extract the number of days to be activated from the code
+- The token generator (the server), will be given some starting data for each device that are defined by the manufacturer. This includes a key (that can be shared for a whole batch or not) as well as a serial number and a "starting code" for each device. Aspecific format for this data based on CSV shall be specified to ensure interoperability.
+- The token verification (the unit) will know its "starting code" and the key and will extract the number of days to be activated from the code
 - The codes should ideally be 9 digits longs to make successful entry by end user more likely
 - For devices with limited space and without the options for infrared remotes, having the ability to enter codes using only digits 1 to 4 should be possible (at the expense of accepting a longer 15 digit code).
 
@@ -34,7 +35,7 @@ While projects financed by EnAccess usually use an MIT license for maximum openn
 - A keypad input method (either Infrared Receiver and Infrared remote, an actual membrane keypad, or a USB port to which a USB keyboard can be connected). It should preferably have at least 12 buttons, but 10 buttons or even 4 buttons can be sufficient.
 - A hardware Real Time Clock (RTC) that is accurate enough to drift by a non- noticeable time over 12 months (usually less than 6h would be good). However, there is no need for the RTC to be configured with the actual real time, it is only required that the timestamp obtained from the RTC keeps going up constantly by 1 every second with minimal drift.
 - An EEPROM or other memory on which permanent data can be stored (such as the serial number, device keys, PAYG status, etc.). Flash can be used as long as proper care is taken to make sure the lifetime of the used flash blocks is sufficient
-- A UART or other communication interface that allows the “starting code” and key to be set in factory. Alternatively, some other way to have different firmware for each unit can be used (e.g. factory flashed MCUs with procedure to set different values in flash for each device).
+- A UART or other communication interface that allows the "starting code" and key to be set in factory. Alternatively, some other way to have different firmware for each unit can be used (e.g. factory flashed MCUs with procedure to set different values in flash for each device).
 - If the device can be disconnected from the battery, also make sure that:
 - The RTC can be powered by a backup battery to not be reset and keep running when the battery is disconnected
 - There are backup registers with at least 96 bits that are kept by the backup battery when the power is disconnected (but lost if the backup battery is not present and the RTC stops running). This is used for the storage of key values that are frequently changing.
@@ -45,22 +46,22 @@ An example implementation both on the server side and on the device side is prov
 
 ## Simplified description of the solution
 
-The code system is based on codes that contain a unique “Activation Value” that the device for which it was generated can find. The code also contains a “count” that increments by one each time a code is generated on the server.
+The code system is based on codes that contain a unique "Activation Value" that the device for which it was generated can find. The code also contains a "count" that increments by one each time a code is generated on the server.
 
 The decoder makes sure that the code entered has a count that is higher than its current count but only up to 30 higher for security reasons. This number can be decreased significantly to improve security, although there is a compromise in terms of usability in case the clients loses enough intermediary codes that the new code is then considered invalid. This ensures that entering a code already used will not add more days again. The decoder then extracts the activation value from the code and returns it to the rest of the system.
 
 ## Encoding of the value
 
-The value is encoded in the last 3 digits of the code by masking the value in the “starting code”. This is done by adding the value to the last 3 digits of the “starting code”, if the resulting value is over 999, then 1000 is subtracted from the value. For example, if the code is “123456**789**” and the value to be encoded is 50, the resulting code with value encoded would be “123456**839**”.
+The value is encoded in the last 3 digits of the code by masking the value in the "starting code". This is done by adding the value to the last 3 digits of the "starting code", if the resulting value is over 999, then 1000 is subtracted from the value. For example, if the code is "123456**789**" and the value to be encoded is 50, the resulting code with value encoded would be "123456**839**".
 
-The decoding is done by subtracting the “starting code” base (the last 3 digit) to the base (last 3 digits) of the received code. For example, if the received code is 123456829, the base is 829. Subtracting 789 from 829 gives us 40 which is the value. If the value obtained is negative, then 1000 needs to be added.
+The decoding is done by subtracting the "starting code" base (the last 3 digit) to the base (last 3 digits) of the received code. For example, if the received code is 123456829, the base is 829. Subtracting 789 from 829 gives us 40 which is the value. If the value obtained is negative, then 1000 needs to be added.
 
 ## Decoding the code on the device
 
 1. Decode the value form the input code.
-1. Generate the “base code” by adding encoding that value into the starting code following the steps in the “encoding of the value” section
-1. Pass the “base code” X times through the “code generation function”, Xbeing the last count + 30, at each iteration:
-   1. Replace the “code base” in the resulting code with the “encoded code base”. For example, if the resulting code from step 3 is “234567**890**”, then the final code would be “234567**839**” (if the value to be encoded is 50 and the base 789 like in the example above)
+1. Generate the "base code" by adding encoding that value into the starting code following the steps in the "encoding of the value" section
+1. Pass the "base code" X times through the "code generation function", Xbeing the last count + 30, at each iteration:
+   1. Replace the "code base" in the resulting code with the "encoded code base". For example, if the resulting code from step 3 is "234567**890**", then the final code would be "234567**839**" (if the value to be encoded is 50 and the base 789 like in the example above)
    1. If the current X is strictly higher than the last count, we compare the resulting code to the input code, if they match. If it matches, then the code is valid and we return the value. If not we continue iterating
 1. If the end of the loop is reached and no match was found, the code was invalid (either already used or properly invalid).
 
@@ -92,7 +93,7 @@ Computational steps for code generation:
 - The values of any code of length other than 9 digits is not covered by this standard and up to individual device manufacturers to use as desired.
 - The values 996 and 997 are reserved for future extensions
 
-## Description of the “Add Time” and “Set Time”
+## Description of the "Add Time" and "Set Time"
 
 ### Use of the modes
 
@@ -113,7 +114,7 @@ The Add Time mode also prevents the removal of days, if a client is given too ma
 
 ### Limitations of Set Time
 
-The Set Time mode can intuitively feels like it is the “best” mode to use since it allows both adding and removing days and ensure that the client has the right number of days, however there is an issue with important consequences; the time at which the token is actually entered in the device can usually not be controlled (as the client does it himself). In some cases, this means that if the client has still time left on his system and waits to enter a new token he receives with extra time, he could end up having more time than expected.
+The Set Time mode can intuitively feels like it is the "best" mode to use since it allows both adding and removing days and ensure that the client has the right number of days, however there is an issue with important consequences; the time at which the token is actually entered in the device can usually not be controlled (as the client does it himself). In some cases, this means that if the client has still time left on his system and waits to enter a new token he receives with extra time, he could end up having more time than expected.
 
 For example: If a client buys 10 days of activation and enters the token into his device, but at day 5 buys another 7 days of activation, he will get a token with 12 days. In theory he should be active for 17 days from the first day if he did enter the token when he receives it, which would be fine. However, if he waits until the end of the first 10 days (when his device turns off) to enter the second token, he will then have his device activate for 12 more days, meaning that his device will still be active 22 days after the first day, instead of 17 days.
 
@@ -138,7 +139,7 @@ The Time Divider should be specified in the Device Setup parameters (as part of 
 
 ## Restricted Digit Set Mode
 
-Some devices do not have a full set of buttons to enter all digits between 0 and 9, instead they often have only 4 or 5 buttons. For those cases, OPAYGO provides a “Restricted Digit Set” mode, that needs to be set in both the device and server parameters. In that case, the server converts the original token to a longer token using only digits between 1 and 4.
+Some devices do not have a full set of buttons to enter all digits between 0 and 9, instead they often have only 4 or 5 buttons. For those cases, OPAYGO provides a "Restricted Digit Set" mode, that needs to be set in both the device and server parameters. In that case, the server converts the original token to a longer token using only digits between 1 and 4.
 
 The encoding is done by taking the original token represented as an unsigned integer and iterating through its bit 2 by 2, converting them to a digit between 0 and 3 and adding 1 for easier readability. The decoding is done by reading each digit individually and concatenating
 
@@ -156,9 +157,9 @@ The difference in length is represented in the table below.
 
 In some situations, the count kept on a server might get widely out of sync with a device, for example if a user mistakenly generate a lot of tokens for a unit and does not enter them in the device, or if up-to-date counter values are partially lost due to a server failure.
 
-The counter synchronisation feature exist for those situations. If the value encoded in the token is 999, then the device should attempt to decode tokens with counts from 0 and up to 100 above the last count. That is, the device will pass the “base code” X times through the “code generation function”, Xbeing the last count + 100, and at each iteration will replace the code base and compare with the current token reset count. If the token matches and the count is either 0 or between last count - 30 and last count + 100, it will set the internal token count to that count.
+The counter synchronisation feature exist for those situations. If the value encoded in the token is 999, then the device should attempt to decode tokens with counts from 0 and up to 100 above the last count. That is, the device will pass the "base code" X times through the "code generation function", Xbeing the last count + 100, and at each iteration will replace the code base and compare with the current token reset count. If the token matches and the count is either 0 or between last count - 30 and last count + 100, it will set the internal token count to that count.
 
-The support for this token synchronisation feature is optional, and the values for the number of tokens below and above the last count are indicative and so is the support for the counter synchronisation token with a count value of 0 (also called “reset token”).
+The support for this token synchronisation feature is optional, and the values for the number of tokens below and above the last count are indicative and so is the support for the counter synchronisation token with a count value of 0 (also called "reset token").
 
 An alternative solution to solve those issues is to directly adjust the token on the server, either by trying different values until the tokens are accepted by the device, or by reading out the count of the device directly via some mechanism (UART, display, etc.). Those solutions are often preferred as they present less security compromise, but they might not be feasible in terms of cost or complexity.
 
@@ -186,7 +187,7 @@ It is highly recommended to use different keys for every device when the assembl
 
 Device manufacturers should be mindful that while this feature is convenient, it affects the level of security of the device by having a larger range of valid tokens, making their bruteforce easier (while still unlikely).
 
-Moreover, counter synchronisation tokens with a count value of 0 (also called “reset tokens”) by essence will work at any point in time in the lifetime of the device. So although they can be useful in some situations (regular counter sync not working or units needing with a lost count requiring refurbishment). Those reset tokens should never be given to a client, as it will allow them to just reuse any code by entering them into the device, then entering the reset token and entering the code again. Instead, they should only be generated and used by technician during very specific maintenance procedures.
+Moreover, counter synchronisation tokens with a count value of 0 (also called "reset tokens") by essence will work at any point in time in the lifetime of the device. So although they can be useful in some situations (regular counter sync not working or units needing with a lost count requiring refurbishment). Those reset tokens should never be given to a client, as it will allow them to just reuse any code by entering them into the device, then entering the reset token and entering the code again. Instead, they should only be generated and used by technician during very specific maintenance procedures.
 
 ### Hardware Security
 
@@ -194,7 +195,7 @@ Device manufacturers should not neglect the risk of hardware attacks, particular
 
 ### Security Audit
 
-For more information about security risks and mitigation, see the “Security Audit” document.
+For more information about security risks and mitigation, see the "Security Audit" document.
 
 ## Description of the Device Setup parameters
 
@@ -220,19 +221,19 @@ For more information about security risks and mitigation, see the “Security Au
 
 ## Format for setup parameters communication
 
-To ensure smooth communication between the device manufacturers and the software provider or in between software providers when migrating, we recommend following a particular template. It is available in the file “example_device_list. csv”.
-It is important that the CSV be encoded using actual comma separator “,” and a carriage return for line separation. It is also important that the first line (the header) is kept and that all the columns appear even if they are empty (the default value as defined above will then be used).
+To ensure smooth communication between the device manufacturers and the software provider or in between software providers when migrating, we recommend following a particular template. It is available in the file "example_device_list. csv".
+It is important that the CSV be encoded using actual comma separator "," and a carriage return for line separation. It is also important that the first line (the header) is kept and that all the columns appear even if they are empty (the default value as defined above will then be used).
 
 ## Important consideration on Serial Numbers
 
 While serial numbers are not actually used inside the device or by the OpenPAYGO Token system, they are required as a single unique identifier for PAYG platforms. For that reason we highly recommend the following measures:
 
 1. **Print the serial numbers very visibly on the devices:** both Agents and Clients will often need to find them for usage with the PAYG platform (e.g. as payment reference)
-1. **Include a prefix related to your brand in the serial number:** this will prevent different products from different manufacturers having the same serial number. For example, if your brand is “SuperLight” you can use the prefix “SLT” prefix and have serial numbers that look like this: SLT30000123 hence making serial number clashes a lot less likely.
-1. **Be sure to use the same format of serial numbers everywhere:** make sure that the serial number format that you use as printed on your device, on the box, on the CSV list, etc. always have the same format to avoid confusion. For example avoid printing “30000123” but then having “SLT30000123” in the CSVto avoid confusing clients.
+1. **Include a prefix related to your brand in the serial number:** this will prevent different products from different manufacturers having the same serial number. For example, if your brand is "SuperLight" you can use the prefix "SLT" prefix and have serial numbers that look like this: SLT30000123 hence making serial number clashes a lot less likely.
+1. **Be sure to use the same format of serial numbers everywhere:** make sure that the serial number format that you use as printed on your device, on the box, on the CSV list, etc. always have the same format to avoid confusion. For example avoid printing "30000123" but then having "SLT30000123" in the CSVto avoid confusing clients.
 
 ## Test codes
 
-In some cases, in particular during testing, manufacturers might find it useful to have a “test code” that activate the device for a short period of time (enough to test the device, but not enough to be useful to an end user, typically 30 seconds). It is often useful that these test codes are shared by a whole batch of devices to facilitate testing. We recommend for security purposes to limit the use of those codes, for example preventing the use of the test code more than 5 times every 60 minutes.
+In some cases, in particular during testing, manufacturers might find it useful to have a "test code" that activate the device for a short period of time (enough to test the device, but not enough to be useful to an end user, typically 30 seconds). It is often useful that these test codes are shared by a whole batch of devices to facilitate testing. We recommend for security purposes to limit the use of those codes, for example preventing the use of the test code more than 5 times every 60 minutes.
 
 In any case, those test codes do not have the same constraints as the regular codes. We recommend to directly check for them in the code and bypass the OpenPAYGO Token logic entirely for those test codes. To avoid clash with OpenPAYGO Token, we still recommend that this test code be provided in the CSV spreadsheet to the software provider, so that if by chance an actual token was the same as the test code, the count could be increased to generate an alternate token.
