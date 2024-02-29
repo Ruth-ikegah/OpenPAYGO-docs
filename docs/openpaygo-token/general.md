@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # General Documentation
 
 ## Description of the business need
