@@ -192,5 +192,3 @@ It is also recommended for very small products on which having a keypad or a por
 - Technology is not very widely available and requires additional engineering effort
 
 **When to use it:** We recommend using this when the lowest cost per product is needed and when you have a significant density of clients that can justify investing in the networking infrastructure.
-
-

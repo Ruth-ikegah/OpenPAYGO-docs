@@ -97,9 +97,9 @@ In that case, if the count of the token entered is below the highest count, but 
 
 However, the entry of older tokens should ONLYbe permitted for Add-Time tokens, in no cases should the entry of an Add-Time token older than another type of token be allowed (e.g. Set-Time token be allowed as it would defeat the purpose of the Set-Time token (e.g. removing days added by mistake). Care should also be taken to prevent the entry of any tokens older than a Counter Sync or Disable PAYG token as well.
 
+## Roll Out Considerations for OpenPAYGO Tokens
 
-# Roll Out Considerations for OpenPAYGO Tokens
-## Description of the Device Setup parameters
+### Description of the Device Setup parameters
 
 | Parameter                        | Description                                                                                                                                                                                             |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -111,7 +111,7 @@ However, the entry of older tokens should ONLYbe permitted for Add-Time tokens, 
 | Count (Optional)                 | If set, the count of the device will be initialized with that value, the default value is 1. Using another random value between 1 and 10 can help improve security. The count is needed for migrations. |
 | Test Code (Optional)             | It is not technically an OpenPAYGO valid token but will be used by the software platform to avoid clash (see note below)                                                                                |
 
-## Code Values Table
+### Code Values Table
 
 | Code Value | Usage                                                                                                                                                                                                            |
 | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -121,12 +121,12 @@ However, the entry of older tokens should ONLYbe permitted for Add-Time tokens, 
 | 998        | Disable PAYG                                                                                                                                                                                                     |
 | 999        | Counter synchronisation                                                                                                                                                                                          |
 
-## Format for setup parameters communication
+### Format for setup parameters communication
 
 To ensure smooth communication between the device manufacturers and the software provider or in between software providers when migrating, we recommend following a particular template. It is available in the file "example_device_list. csv".
 It is important that the CSV be encoded using actual comma separator "," and a carriage return for line separation. It is also important that the first line (the header) is kept and that all the columns appear even if they are empty (the default value as defined above will then be used).
 
-## Important consideration on Serial Numbers
+### Important consideration on Serial Numbers
 
 While serial numbers are not actually used inside the device or by the OpenPAYGO Token system, they are required as a single unique identifier for PAYG platforms. For that reason we highly recommend the following measures:
 
@@ -134,34 +134,34 @@ While serial numbers are not actually used inside the device or by the OpenPAYGO
 1. **Include a prefix related to your brand in the serial number:** this will prevent different products from different manufacturers having the same serial number. For example, if your brand is "SuperLight" you can use the prefix "SLT" prefix and have serial numbers that look like this: SLT30000123 hence making serial number clashes a lot less likely.
 1. **Be sure to use the same format of serial numbers everywhere:** make sure that the serial number format that you use as printed on your device, on the box, on the CSV list, etc. always have the same format to avoid confusion. For example avoid printing "30000123" but then having "SLT30000123" in the CSVto avoid confusing clients.
 
-## Test codes
+### Test codes
 
 In some cases, in particular during testing, manufacturers might find it useful to have a "test code" that activate the device for a short period of time (enough to test the device, but not enough to be useful to an end user, typically 30 seconds). It is often useful that these test codes are shared by a whole batch of devices to facilitate testing. We recommend for security purposes to limit the use of those codes, for example preventing the use of the test code more than 5 times every 60 minutes.
 
 In any case, those test codes do not have the same constraints as the regular codes. We recommend to directly check for them in the code and bypass the OpenPAYGO Token logic entirely for those test codes. To avoid clash with OpenPAYGO Token, we still recommend that this test code be provided in the CSV spreadsheet to the software provider, so that if by chance an actual token was the same as the test code, the count could be increased to generate an alternate token.
 
-# Security Considerations
+## Security Considerations
 
-## Waiting period for invalid tokens
+### Waiting period for invalid tokens
 
 To ensure a good level of security, it is recommended that a waiting period is implemented in case of invalid token entry in order to make brute force attacks more difficult. We recommend starting with 1 minute wait, and doubling it for each subsequent invalid token entry going up to 512 minutes (~8 hours) after 9 consequent invalid tries.
 
 This cap should be low enough that if a mistake (i.e. child playing with the keypad) happens, the wait is not so long as to prevent the use of the product, but is long enough that brute force attacks become very difficult (almost 1 year to try 1000 different tokens). We also recommend making sure that this waiting period is kept if the device is turned off and on again.
 
-## Key Security
+### Key Security
 
 It is highly recommended to use different keys for every device when the assembly processes make it possible. Great care should also be taken to keep those keys secure (e.g. avoiding sending files with all the device keys in non-secure ways) and to select them with a proper random process.
 
-## Counter synchronisation tokens
+### Counter synchronisation tokens
 
 Device manufacturers should be mindful that while this feature is convenient, it affects the level of security of the device by having a larger range of valid tokens, making their bruteforce easier (while still unlikely).
 
 Moreover, counter synchronisation tokens with a count value of 0 (also called "reset tokens") by essence will work at any point in time in the lifetime of the device. So although they can be useful in some situations (regular counter sync not working or units needing with a lost count requiring refurbishment). Those reset tokens should never be given to a client, as it will allow them to just reuse any code by entering them into the device, then entering the reset token and entering the code again. Instead, they should only be generated and used by technician during very specific maintenance procedures.
 
-## Hardware Security
+### Hardware Security
 
 Device manufacturers should not neglect the risk of hardware attacks, particularly targeting lines that can be easily modified from low to high (or vice-versa) to enable a product.
 
-## Security Audit
+### Security Audit
 
 For more information about security risks and mitigation, see the "Security Audit" document.

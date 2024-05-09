@@ -8,7 +8,6 @@ sidebar_position: 3
 
 ### Python
 
-
 ### C
 
 #### How to use the code provided
@@ -67,7 +66,6 @@ This test (scenario 1) allows to quickly assess whether an implementation seems 
 7. Press `*` to start entering the token and enter the code `650975787`, this should disable PAYG on the device (it should now be active forever) and the Green LED 🟢 should blink 5 times to show it is valid.
 8. Press `*` to start entering the token and enter the code `592185789`, this should enable PAYG again on the device and set it to 0 days (not active). and the Green LED 🟢 should blink 2 times to show it is valid.
 
-
 ## Example implementation provided
 
 An example implementation both on the server side and on the device side is provided with this documentation. It should allow you to just copy and paste most of the code into the firmware of your device and only adapt parts of the codes (which are purposely placeholders using Unix libraries to allow simulation on a computer) to match the actual hardware of your device (mainly the code to read the keypad presses, blink the LEDs and to access the RTCand memory). For more details, see below after the description of the solution.
@@ -105,4 +103,3 @@ Computational steps for code generation:
 1. XOR the two parts together
 1. Remove the top 2 Most Significant Bits from the result of the XORing above (leaving the 30 LSBits)
 1. If the resulting value is over 999999999, subtract 73741825 to the value, this leaves 29.5 effective bits of entropy
-

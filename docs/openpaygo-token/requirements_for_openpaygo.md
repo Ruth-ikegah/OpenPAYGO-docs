@@ -26,4 +26,3 @@ sidebar_position: 2
 - If the device can be disconnected from the battery, also make sure that:
 - The RTC can be powered by a backup battery to not be reset and keep running when the battery is disconnected
 - There are backup registers with at least 96 bits that are kept by the backup battery when the power is disconnected (but lost if the backup battery is not present and the RTC stops running). This is used for the storage of key values that are frequently changing.
-
